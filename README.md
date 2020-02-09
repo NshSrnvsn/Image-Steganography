@@ -42,6 +42,16 @@ Lossless-compression means that the files are stored in a compressed format, but
 Lossy-compression is the opposite of lossless-compression. When lossy compression is used there is no guarantee that the file will not be modified slightly when subjected to storage, transmission, or decompression. In nearly all cases this modification will be imperceptible to the end user, otherwise it wouldn’t be very popular. However, since LSB steganography will modify these “unimportant” bits that can be lost during compression doing steganography on files with lossy-compression is more complex. This means we can’t risk using lossy compression that may not preserve our modifications. Some examples of lossy-compression image file formats are JPEG and BPG.
 
 
+### Code
+
+The Code included here includes 2 kinds. 
+            1. Terminal code - [steg.py]
+               This works for loseless image format (.png, .jpeg)
+
+            2. User interface code- [GUI.py]
+                This works for BMP format.
+
+
 ## Learn More
 
 [Image Steganography in Cryptography]-https://www.geeksforgeeks.org/image-steganography-in-cryptography/
