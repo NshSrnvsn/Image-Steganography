@@ -1,0 +1,69 @@
+
+LEAST SIGNIFICANT BIT
+
+  A simple approach for embedding information in cover image is using Least Significant Bits (LSB). The simplest steganography techniques embed the bits of the message directly into least significant bit plane of the cover image in a deterministic sequence. Modulating the least significant bit does not result in human-perceptible difference because the amplitude of the change is small . To hide a secret message inside an image, a proper cover image is needed. Because this method uses bits of each pixel in the image, it is necessary to use a lossless compression format, otherwise the hidden information will get lost in the transformations of a lossy compression algorithm. When using a 24-bit color image, a bit of each of the red, green and blue color components can be used, so a total of 3 bits can be stored in each pixel. 
+
+
+ TECHNIQUE BASICS
+ 
+  Today, when converting an analog image to digital format, we usually choose between three different ways of representing colors:
+24-bit color: every pixel can have one in 2^24 colors, and these are represented as different quantities of three basic colors: red (R), green (G), blue (B), given by 8 bits (256 values) each.
+8-bit color: every pixel can have one in 256 (2^8) colors, chosen from a palette, or a table of colors.
+8-bit gray-scale: every pixel can have one in 256 (2^8) shades of gray.
+LSB insertion modifies the LSBs of each color in 24-bit images, or the LSBs of the 8-bit value for 8-bit images.
+
+Example:
+
+  The letter 'A' has an ASCII code of 65(decimal), which is 1000001 in binary.
+It will need three consecutive pixels for a 24-bit image to store an 'A':
+
+Let's say that the pixels before the insertion are:
+10000000.10100100.10110101, 10110101.11110011.10110111, 11100111.10110011.00110011
+
+Then their values after the insertion of an 'A' will be:
+10000001.10100100.10110100, 10110100.11110010.10110110, 11100110.10110011.00110011
+(The values in bold are the ones that were modified by the transformation)
+
+
+The same example for an 8-bit image would have needed 8 pixels:
+10000000, 10100100, 10110101, 10110101, 11110011, 10110111, 11100111, 10110011
+
+Then their values after the insertion of an 'A' would have been:
+10000001, 10100100, 10110100, 10110100, 11110010, 10110110, 11100110, 10110011
+(Again, the values in bold are the ones that were modified by the transformation)
+From these examples we can infer that 1-LSB insertion usually has a 50% chance to change a LSB every 8 bits, thus adding very little noise to the original picture.
+For 24-bit images the modification can be extended sometimes to the second or even the third LSBs without being visible. 8-bit images instead have a much more limited space where to choose colors, so it's usually possible to change only the LSBs without the modification being detectable.
+
+
+-> DATA RATE
+  
+  The most basic of LSBs insertion for 24-bit pictures inserts 3 bits/pixel. Since every pixel is 24 bits, we can hide
+3 hidden_bits/pixel / 24 data_bits/pixel = 1/8 hidden_bits/data_bits
+So for this case we hide 1 bit of the embedded message for every 8 bits of the cover image.
+If we pushed the insertion to include the second LSBs, the formula would change to:
+6 hidden_bits/pixel / 24 data_bits/pixel = 2/8 hidden_bits/data_bits
+And we would hide 2 bits of the embedded message for every 8 bits of the cover image. Adding a third-bit insertion, we would get:
+9 hidden_bits/pixel / 24 data_bits/pixel = 3/8 hidden_bits/data_bits
+Acquiring a data rate of 3 embedded bits every 8 bits of the image.
+The data rate for insertion in 8-bit images is analogous to the 1 LSB insertion in 24-bit images, or 1 embedded bit every 8 cover bits.
+We can see the problem in another light, and ask how many cover bytes are needed to send an embedded byte.
+For 1-LSB insertion in 24-bit images or in 8-bit images this value would be 8/1*8 = 8 Bytes, for 2-LSBs insertion in 24-bit pictures it would be 8/2*8 = 4 Bytes, for 3-LSBs insertion it would be 8/3*8 = 21.33 Bytes.
+
+-> ROBUSTNESS
+
+  LSB insertion is very vulnerable to a lot of transformations, even the most harmless and usual ones.
+Lossy compression, e.g. JPEG, is very likely to destroy it completely. The problem is that the "holes" in the Human Visual System that LSB insertion tries to exploit - little sensitivity to added noise - are the same that lossy compression algorithms rely on to be able to reduce the data rate of images.
+Geometrical transformations, moving the pixels around and especially displacing them from the original grid, are likely to destroy the embedded message, and the only one that could allow recovery is a simple translation.
+All in all, LSB insertion is a very little robust technique for data hiding.
+
+
+-> EASE OF DETECTION/EXTRACTION
+
+  There is no theoretical outstanding mark of LSB insertion, if not a little increase of background noise.
+It's very easy, instead, to extract LSBs even with simple programs, and to check them later to find if they mean something or not.
+
+
+-> SUITABILITY FOR STEGANOGRAPHY OR WATERMARKING
+
+  First of all, since it is a so vulnerable technique even for simple processing, LSB insertion is almost useless for digital watermarking, where it must face malicious attempts at its destruction, plus normal transformations like compression/decompression or conversion to analog (printing or visualization)/conversion to digital (scanning).
+Its comparatively high data rate can point it as a good technique for steganography, where robustness is not such an important constraint.
