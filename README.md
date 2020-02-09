@@ -45,11 +45,13 @@ Lossy-compression is the opposite of lossless-compression. When lossy compressio
 ### Code
 
 The Code included here includes 2 kinds. 
-            1. Terminal code - [steg.py]
-               This works for loseless image format (.png, .jpeg)
+            
 
-            2. User interface code- [GUI.py]
+            1. User interface code- [GUI.py]
                 This works for BMP format.
+                
+            2. Terminal code - [steg.py]
+               This works for loseless image format (.png, .jpeg)
 
 
 ## Learn More
