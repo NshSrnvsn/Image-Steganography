@@ -1,3 +1,4 @@
+
 Suppose the message to be hidden is ‘ Hii ‘. 
 Since the message is of 3-bytes, therefore, pixels required to encode the data is 3 x 3 = 9. Consider a 4 x 3 image with total 12-pixels, which are sufficient to encode the given data.
 
